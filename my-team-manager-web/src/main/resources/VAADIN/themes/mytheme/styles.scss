@@ -1,0 +1,11 @@
+@import "../valo/valo.scss";
+
+@include valo;
+
+.menu {
+    background: $vaadin-bg-color3;
+
+    .v-button {
+        display: block;
+    }
+}
