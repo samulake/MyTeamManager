@@ -10,7 +10,7 @@ public class TeamDto {
 
     private List<PersonDto> members = new ArrayList<>();
 
-    private PersonDto leader;
+    private UserDto leader;
 
     public Long getId() {
         return id;
@@ -36,11 +36,11 @@ public class TeamDto {
         this.members = members;
     }
 
-    public PersonDto getLeader() {
+    public UserDto getLeader() {
         return leader;
     }
 
-    public void setLeader(PersonDto leader) {
+    public void setLeader(UserDto leader) {
         this.leader = leader;
     }
 }

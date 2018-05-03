@@ -7,6 +7,8 @@ public class PersonDto {
 
     private String lastName;
 
+    private boolean isUser;
+
     public Long getId() {
         return id;
     }
@@ -29,5 +31,13 @@ public class PersonDto {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public boolean isUser() {
+        return isUser;
+    }
+
+    public void setUser(boolean user) {
+        isUser = user;
     }
 }

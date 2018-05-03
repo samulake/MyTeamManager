@@ -4,7 +4,7 @@ import org.samulake.web.core.entity.PersonEntity;
 import org.samulake.web.core.dto.PersonDto;
 import org.springframework.stereotype.Service;
 @Service
-public class PersonConverter extends AbstractConverter<PersonEntity, PersonDto> {
+public class PersonConverter<ENTITY extends PersonEntity, DTO extends PersonDto> extends AbstractConverter<ENTITY, DTO> {
 
 	@Override
 	public PersonEntity toEntity(PersonDto dto) {

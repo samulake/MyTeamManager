@@ -57,13 +57,13 @@ public class UserEntity extends PersonEntity implements UserDetails {
 		return true;
 	}
 
-	public TeamEntity getTeam() {
-		return team;
-	}
-
-	public void setTeam(TeamEntity team) {
-		this.team = team;
-	}
+//	public TeamEntity getTeam() {
+//		return team;
+//	}
+//
+//	public void setTeam(TeamEntity team) {
+//		this.team = team;
+//	}
 
 	public void setUsername(String username) {
 		this.username = username;

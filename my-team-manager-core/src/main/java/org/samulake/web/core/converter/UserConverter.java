@@ -1,24 +1,26 @@
 package org.samulake.web.core.converter;
 
-import org.samulake.web.core.dto.PersonDto;
 import org.samulake.web.core.dto.UserDto;
-import org.samulake.web.core.entity.PersonEntity;
 import org.samulake.web.core.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public class UserConverter extends PersonConverter {
+@Service
+public class UserConverter extends PersonConverter<UserEntity, UserDto> {
     @Autowired
     private PersonConverter personConverter;
 
     public UserEntity toEntity(UserDto dto) {
-        UserEntity userEntity = (UserEntity) super.toEntity(dto);
+        super.toEntity(dto);
+        UserEntity userEntity = new UserEntity();
         userEntity.setUsername(dto.getUsername());
         userEntity.setPassword(dto.getPassword());
         return userEntity;
     }
 
     public UserDto toDto(UserEntity entity) {
-        UserDto userDto = (UserDto) super.toDto(entity);
+        super.toDto(entity);
+        UserDto userDto = new UserDto();
         userDto.setUsername(entity.getUsername());
         userDto.setPassword(entity.getPassword());
         return userDto;

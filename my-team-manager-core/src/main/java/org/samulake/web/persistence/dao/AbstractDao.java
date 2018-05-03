@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import org.samulake.web.core.converter.AbstractConverter;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public abstract class AbstractDao<ENTITY, DTO, ID extends Number> {
+public abstract class AbstractDao<ENTITY, DTO, ID> {
     JpaRepository<ENTITY, ID> repository;
     AbstractConverter<ENTITY, DTO> converter;
 
@@ -16,7 +16,7 @@ public abstract class AbstractDao<ENTITY, DTO, ID extends Number> {
     }
 
     public DTO get(ID id) {
-        return converter.toDto(repository.findOne(id));
+        return converter.toDto(repository.getOne(id));
     }
 
     public void delete(DTO dto) {
