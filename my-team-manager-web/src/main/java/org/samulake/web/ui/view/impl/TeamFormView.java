@@ -1,14 +1,16 @@
 package org.samulake.web.ui.view.impl;
 
+import com.vaadin.data.Binder;
+import com.vaadin.data.validator.StringLengthValidator;
+import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import org.samulake.web.core.dto.TeamDto;
-import org.samulake.web.ui.controller.TeamFormController;
 import org.samulake.web.ui.view.ITeamFormView;
-import org.samulake.web.ui.window.MyTeamManagerUI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public class TeamFormView extends VerticalLayout implements ITeamFormView {
     private TextField teamNameTextField;
     private Button submitButton;
+    private Binder<TeamDto> binder;
 
     private ITeamFormController controller;
 
@@ -24,8 +27,7 @@ public class TeamFormView extends VerticalLayout implements ITeamFormView {
     public TeamFormView(@Qualifier("teamFormController") ITeamFormController controller) {
         this.controller = controller;
         controller.setView(this);
-        init(null);
-        showTeamForm();
+        init(new TeamDto());
     }
 
     @Override
@@ -39,18 +41,47 @@ public class TeamFormView extends VerticalLayout implements ITeamFormView {
     }
 
     @Override
-    public void init(TeamDto teamDto) {
+    public final void init(TeamDto teamDto) {
+        createFormFields();
+        addListenersToFields();
+        bindFields(teamDto);
+    }
 
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent event) {
+        clearFields();
+    }
+
+    private void clearFields() {
+        if(teamNameTextField != null) {
+            teamNameTextField.setValue("");
+        }
+    }
+
+    private void bindFields(TeamDto teamDto) {
+        binder = new Binder<>();
+        binder.forField(teamNameTextField)
+                .withValidator(new StringLengthValidator("Team name must be between 3 and 100",3, 100))
+                .bind(TeamDto::getName, TeamDto::setName);
+        binder.setBean(teamDto);
+    }
+
+    private void createFormFields() {
         teamNameTextField = new TextField("Team name");
         submitButton = new Button("Submit");
         addComponents(teamNameTextField, submitButton);
-        submitButton.addClickListener(event -> controller.onCreateClicked());
+    }
+
+    private void addListenersToFields() {
+        submitButton.addClickListener(event -> {
+            if(binder.isValid()) {
+                controller.onCreateClicked();
+            } else Notification.show("Invalid team", Notification.Type.WARNING_MESSAGE);
+        });
     }
 
     @Override
     public TeamDto getModel() {
-        TeamDto teamDto = new TeamDto();
-        teamDto.setName(teamNameTextField.getValue());
-        return teamDto;
+        return binder.getBean();
     }
 }

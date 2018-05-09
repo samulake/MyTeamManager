@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+
 @Service
 public class RegistrationUserService {
     @Autowired
@@ -22,7 +24,7 @@ public class RegistrationUserService {
         user.setPassword(passwordEncoder.encode(password));
         userDao.save(user);
     }
-//
+
 //    @PostConstruct
 //    public void registerTestUser() {
 //        save("test","test", "test");

@@ -33,7 +33,7 @@ public class TeamManagementView extends VerticalLayout implements ITeamManagemen
 
     @Override
     public String getUrl() {
-        return null;
+        return ITeamManagementView.VIEW_URL;
     }
 
     @Override

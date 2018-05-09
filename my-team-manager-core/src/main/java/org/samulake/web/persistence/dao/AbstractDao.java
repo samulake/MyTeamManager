@@ -7,8 +7,8 @@ import org.samulake.web.core.converter.AbstractConverter;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public abstract class AbstractDao<ENTITY, DTO, ID> {
-    JpaRepository<ENTITY, ID> repository;
-    AbstractConverter<ENTITY, DTO> converter;
+    protected JpaRepository<ENTITY, ID> repository;
+    protected AbstractConverter<ENTITY, DTO> converter;
 
     public AbstractDao(JpaRepository<ENTITY, ID> repository, AbstractConverter<ENTITY, DTO> converter) {
         this.repository = repository;
@@ -30,7 +30,5 @@ public abstract class AbstractDao<ENTITY, DTO, ID> {
     public List<DTO> findAll() {
         return repository.findAll().stream().map(converter::toDto).collect(Collectors.toList());
     }
-
-
 }
 

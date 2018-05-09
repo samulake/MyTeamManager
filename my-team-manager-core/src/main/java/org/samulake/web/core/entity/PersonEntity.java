@@ -2,6 +2,7 @@ package org.samulake.web.core.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+import org.samulake.web.core.dto.PersonDto;
 
 import javax.persistence.*;
 
@@ -56,4 +57,11 @@ public class PersonEntity {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+    public <T extends PersonEntity> T cloneProto(T subclass){
+        subclass.setId(getId());
+        subclass.setFirstName(firstName);
+        subclass.setLastName(lastName);
+        return subclass;
+    }
 }

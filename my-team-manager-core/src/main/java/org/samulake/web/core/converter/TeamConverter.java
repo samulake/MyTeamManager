@@ -15,7 +15,6 @@ public class TeamConverter extends AbstractConverter<TeamEntity, TeamDto> {
 	@Override
 	public TeamEntity toEntity(TeamDto dto) {
 		TeamEntity team = new TeamEntity();
-		team.setId(dto.getId());
 		team.setName(dto.getName());
 		team.setMembers(personConverter.toEntityCollection(dto.getMembers()));
 		team.setLeader(userConverter.toEntity(dto.getLeader()));
@@ -28,7 +27,6 @@ public class TeamConverter extends AbstractConverter<TeamEntity, TeamDto> {
 		teamDto.setId(entity.getId());
 		teamDto.setName(entity.getName());
 		teamDto.setMembers(personConverter.toDtoCollection(entity.getMembers()));
-		teamDto.setLeader(userConverter.toDto(entity.getLeader()));
 		return teamDto;
 	}
 

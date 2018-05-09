@@ -1,6 +1,8 @@
 package org.samulake.web.core.dto;
 
+import org.samulake.web.core.entity.TeamEntity;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -11,7 +13,7 @@ public class UserDto extends PersonDto implements UserDetails{
 
     private String password;
 
-    private PersonDto personDetails;
+    private TeamDto team;
 
     public String getUsername() {
         return username;
@@ -54,12 +56,20 @@ public class UserDto extends PersonDto implements UserDetails{
         this.password = password;
     }
 
-    public PersonDto getPersonDetails() {
-        return personDetails;
+    @Override
+    public UserDto clone() throws CloneNotSupportedException {
+        UserDto clone = (UserDto) super.clone();
+        clone.setUsername(username);
+        clone.setPassword(password);
+        return clone;
     }
 
-    public void setPersonDetails(PersonDto personDetails) {
-        this.personDetails = personDetails;
+    public TeamDto getTeam() {
+        return team;
+    }
+
+    public void setTeam(TeamDto team) {
+        this.team = team;
     }
 }
 

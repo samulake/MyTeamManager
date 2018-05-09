@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.samulake.web.core.entity.TeamEntity.TABLE_NAME;
@@ -23,7 +24,7 @@ public class TeamEntity {
 			strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
 			parameters = @Parameter(name = "sequence_name", value = SEQUENCE_NAME)
 	)
-	@GeneratedValue(generator = SEQUENCE_GENERATOR_NAME)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_GENERATOR_NAME)
 	@Column(name = IDENTITY_COLUMN_NAME)
 	private Long id;
 
@@ -36,8 +37,8 @@ public class TeamEntity {
 		joinColumns=@JoinColumn(name=TeamEntity.IDENTITY_COLUMN_NAME),
 		inverseJoinColumns=@JoinColumn(name=PersonEntity.IDENTITY_COLUMN_NAME)
 	)
-	private List<PersonEntity> members;
-	
+	private List<PersonEntity> members = new ArrayList<>();
+
 	@OneToOne
 	@JoinColumn(name = "LEADER_KEY")
 	private UserEntity leader;

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
 @Service
 public class TeamService implements ITeamService {
     @Autowired
@@ -18,8 +20,17 @@ public class TeamService implements ITeamService {
     private UserService userService;
 
     @Override
-    public void createNewTeam(@ValidTeam TeamDto teamDto) {
-        teamDto.setLeader(userService.getUserDetails(SecurityContextHolder.getContext().getAuthentication().getName()));
+    public void createNewTeam(TeamDto teamDto) {
         teamDao.save(teamDto);
+    }
+
+    @Override
+    public Collection<String> getAllTeamsNames() {
+        return teamDao.findAllTeamsNames();
+    }
+
+    @Override
+    public TeamDto getUserTeam(String userName) {
+        return teamDao.findByLeader(userName);
     }
 }

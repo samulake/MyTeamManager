@@ -40,4 +40,16 @@ public class PersonDto {
     public void setUser(boolean user) {
         isUser = user;
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return this;
+    }
+
+    public <T extends PersonDto> T cloneProto(T subclass){
+        subclass.setId(getId());
+        subclass.setFirstName(firstName);
+        subclass.setLastName(lastName);
+        return subclass;
+    }
 }

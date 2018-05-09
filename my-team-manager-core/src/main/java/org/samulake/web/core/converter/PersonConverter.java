@@ -9,7 +9,6 @@ public class PersonConverter<ENTITY extends PersonEntity, DTO extends PersonDto>
 	@Override
 	public PersonEntity toEntity(PersonDto dto) {
 		PersonEntity person = new PersonEntity();
-		person.setId(dto.getId());
 		person.setFirstName(dto.getFirstName());
 		person.setLastName(dto.getLastName());
 		return person;
@@ -23,5 +22,4 @@ public class PersonConverter<ENTITY extends PersonEntity, DTO extends PersonDto>
 		personDto.setLastName(entity.getLastName());
 		return personDto;
 	}
-
 }

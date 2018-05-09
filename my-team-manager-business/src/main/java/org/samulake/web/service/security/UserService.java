@@ -3,6 +3,7 @@ package org.samulake.web.service.security;
 import org.samulake.web.core.dto.UserDto;
 import org.samulake.web.persistence.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,5 +26,9 @@ public class UserService implements UserDetailsService, IUserData {
     @Override
     public UserDto getUserDetails(String login) {
         return userDao.getByName(login);
+    }
+
+    public UserDto getLoggedUserDetails() {
+        return getUserDetails(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 }
