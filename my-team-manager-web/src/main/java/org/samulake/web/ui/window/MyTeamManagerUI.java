@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @SpringUI
-@Theme("mytheme")
+@Theme("valo")
 @Widgetset("AppWidgetset")
 public class MyTeamManagerUI extends UI {
 	private static final long serialVersionUID = 1L;
