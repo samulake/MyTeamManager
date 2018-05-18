@@ -4,9 +4,10 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.TextField;
 import org.samulake.web.ui.controller.EventFormController;
+import org.samulake.web.ui.view.IEventFormView;
 
 @UIScope
-@SpringView(name= EventFormController.TRENING_VIEW_URL)
+@SpringView(name= IEventFormView.TRENING_VIEW_URL)
 public class TreningFormView extends EventFormView{
 
     @Override
@@ -16,6 +17,6 @@ public class TreningFormView extends EventFormView{
 
     @Override
     public String getUrl() {
-        return EventFormController.TRENING_VIEW_URL;
+        return IEventFormView.TRENING_VIEW_URL;
     }
 }

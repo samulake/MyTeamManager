@@ -7,9 +7,10 @@ import com.vaadin.ui.Grid;
 import com.vaadin.ui.TextField;
 import org.samulake.web.core.dto.PersonDto;
 import org.samulake.web.ui.controller.EventFormController;
+import org.samulake.web.ui.view.IEventFormView;
 
 @UIScope
-@SpringView(name= EventFormController.MATCH_VIEW_URL)
+@SpringView(name= IEventFormView.MATCH_VIEW_URL)
 public class MatchFormView extends EventFormView {
     private ComboBox rivalComboBox;
     private TextField playersPerTeamComboBox;
@@ -31,6 +32,6 @@ public class MatchFormView extends EventFormView {
 
     @Override
     public String getUrl() {
-        return EventFormController.MATCH_VIEW_URL;
+        return IEventFormView.MATCH_VIEW_URL;
     }
 }

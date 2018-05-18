@@ -8,9 +8,6 @@ import org.samulake.web.service.security.UserService;
 import org.samulake.web.ui.view.ITeamFormView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.context.SecurityContextHolder;
-
-import javax.annotation.PostConstruct;
 
 @UIScope
 @SpringComponent

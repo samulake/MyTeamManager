@@ -4,6 +4,7 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.Navigator;
+import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.spring.annotation.SpringUI;
@@ -11,11 +12,14 @@ import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.*;
 import org.samulake.web.service.security.UserService;
 import org.samulake.web.ui.component.MenuLayout;
-import org.samulake.web.ui.controller.EventFormController;
+import org.samulake.web.ui.view.IEventFormView;
+import org.samulake.web.ui.view.ILoginView;
 import org.samulake.web.ui.view.ITeamFormView;
 import org.samulake.web.ui.view.ITeamManagementView;
+import org.samulake.web.ui.view.impl.LoginPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.servlet.annotation.WebServlet;
 import java.util.HashMap;
@@ -41,6 +45,9 @@ public class MyTeamManagerUI extends UI {
 	@Autowired
 	private SpringViewProvider viewProvider;
 
+	@Autowired
+    LoginPage loginPage;
+
     public Map<String, String> menuUrlMap;
 
     @Autowired
@@ -48,14 +55,23 @@ public class MyTeamManagerUI extends UI {
 
     {
         menuUrlMap = new HashMap<>();
-        menuUrlMap.put(MenuLayout.CREATE_EVENT_TRENING_MENU_OPTION, EventFormController.TRENING_VIEW_URL);
-        menuUrlMap.put(MenuLayout.CREATE_EVENT_MATCH_MENU_OPTION, EventFormController.MATCH_VIEW_URL);
+        menuUrlMap.put(MenuLayout.CREATE_EVENT_TRENING_MENU_OPTION, IEventFormView.TRENING_VIEW_URL);
+        menuUrlMap.put(MenuLayout.CREATE_EVENT_MATCH_MENU_OPTION, IEventFormView.MATCH_VIEW_URL);
         menuUrlMap.put(MenuLayout.CREATE_TEAM_MENU_OPTION, ITeamFormView.ITeamFormController.VIEW_URL);
         menuUrlMap.put(MenuLayout.MY_TEAM_MENU_OPTION, ITeamManagementView.VIEW_URL);
+        menuUrlMap.put(MenuLayout.LOG_OUT_MENU_OPTION, LoginPage.VIEW_URL);
     }
 	
 	@Override
     protected final void init(VaadinRequest vaadinRequest) {
+        setContent(getLoginPage());
+    }
+
+    private Component getLoginPage() {
+        return viewProvider.getView(LoginPage.VIEW_URL).getViewComponent();
+    }
+
+    public void setUserContent() {
         layout = new VerticalLayout();
         contentLayout = new VerticalLayout();
         menuLayout = buildMenuLayout();
@@ -96,7 +112,12 @@ public class MyTeamManagerUI extends UI {
     }
 
     public void navigateTo(Tree.ItemClick menuItem) {
-        getNavigator().navigateTo(menuUrlMap.get(menuItem.getItem()));
+        if(menuItem.getItem() == MenuLayout.LOG_OUT_MENU_OPTION) {
+            getLoginPage();
+            Page.getCurrent().reload();
+        } else {
+            getNavigator().navigateTo(menuUrlMap.get(menuItem.getItem()));
+        }
     }
 }
 

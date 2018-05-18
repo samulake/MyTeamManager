@@ -15,6 +15,16 @@ public class UserDto extends PersonDto implements UserDetails{
 
     private TeamDto team;
 
+    public UserDto() {
+        username = "";
+        password = "";
+    }
+
+    public UserDto(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public String getUsername() {
         return username;
     }

@@ -6,9 +6,11 @@ import org.samulake.web.ui.controller.Controller;
 public interface IEventFormView extends View<EventDto> {
     void showEventForm();
 
+    String TRENING_VIEW_URL = "treningForm";
+    String MATCH_VIEW_URL = "matchForm";
+
     interface IEventFormController extends Controller<IEventFormView> {
-        String TRENING_VIEW_URL = "treningForm";
-        String MATCH_VIEW_URL = "matchForm";
+
 
         void onSubmitClicked();
     }
