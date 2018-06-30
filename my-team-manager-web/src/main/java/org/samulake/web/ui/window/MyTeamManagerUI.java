@@ -9,16 +9,21 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.navigator.SpringViewProvider;
-import com.vaadin.ui.*;
+import com.vaadin.ui.AbstractLayout;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Tree;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 import org.samulake.web.service.security.UserService;
+import org.samulake.web.ui.component.HeaderLayout;
 import org.samulake.web.ui.component.MenuLayout;
 import org.samulake.web.ui.view.IEventFormView;
-import org.samulake.web.ui.view.ILoginView;
 import org.samulake.web.ui.view.ITeamFormView;
 import org.samulake.web.ui.view.ITeamManagementView;
 import org.samulake.web.ui.view.impl.LoginPage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.servlet.annotation.WebServlet;
@@ -26,14 +31,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-@SpringUI
+import static org.springframework.security.core.context.SecurityContextHolder.MODE_GLOBAL;
+
+@SpringUI(path = "my-team-manager")
 @Theme("valo")
 @Widgetset("AppWidgetset")
 public class MyTeamManagerUI extends UI {
 	private static final long serialVersionUID = 1L;
 
-    @Autowired
-    @Qualifier("headerLayout")
     private AbstractLayout headerLayout;
 
 	private AbstractLayout menuLayout;
@@ -45,9 +50,6 @@ public class MyTeamManagerUI extends UI {
 	@Autowired
 	private SpringViewProvider viewProvider;
 
-	@Autowired
-    LoginPage loginPage;
-
     public Map<String, String> menuUrlMap;
 
     @Autowired
@@ -57,14 +59,19 @@ public class MyTeamManagerUI extends UI {
         menuUrlMap = new HashMap<>();
         menuUrlMap.put(MenuLayout.CREATE_EVENT_TRENING_MENU_OPTION, IEventFormView.TRENING_VIEW_URL);
         menuUrlMap.put(MenuLayout.CREATE_EVENT_MATCH_MENU_OPTION, IEventFormView.MATCH_VIEW_URL);
-        menuUrlMap.put(MenuLayout.CREATE_TEAM_MENU_OPTION, ITeamFormView.ITeamFormController.VIEW_URL);
+        menuUrlMap.put(MenuLayout.CREATE_TEAM_MENU_OPTION, ITeamFormView.VIEW_URL);
         menuUrlMap.put(MenuLayout.MY_TEAM_MENU_OPTION, ITeamManagementView.VIEW_URL);
         menuUrlMap.put(MenuLayout.LOG_OUT_MENU_OPTION, LoginPage.VIEW_URL);
     }
 	
 	@Override
     protected final void init(VaadinRequest vaadinRequest) {
-        setContent(getLoginPage());
+        SecurityContextHolder.setStrategyName(MODE_GLOBAL);
+        if(!userService.isLoggedIn())
+            setContent(getLoginPage());
+        else {
+            setUserContent();
+        }
     }
 
     private Component getLoginPage() {
@@ -72,16 +79,19 @@ public class MyTeamManagerUI extends UI {
     }
 
     public void setUserContent() {
+        if(layout != null) return;
         layout = new VerticalLayout();
+        layout.setMargin(false);
+        headerLayout = new HeaderLayout();
         contentLayout = new VerticalLayout();
         menuLayout = buildMenuLayout();
-        AbstractLayout menuAndContentLayout = new HorizontalLayout();
 
+
+        AbstractLayout menuAndContentLayout = new HorizontalLayout();
         menuAndContentLayout.addComponents(menuLayout, contentLayout);
-        contentLayout.setWidth(100, Unit.PERCENTAGE);
         layout.addComponents(headerLayout, menuAndContentLayout);
         initNavigator();
-
+        setSizeFull();
         setContent(layout);
     }
 
@@ -96,11 +106,12 @@ public class MyTeamManagerUI extends UI {
         MenuLayout.MenuLayoutBuilder menuLayoutBuilder = new MenuLayout.MenuLayoutBuilder();
         if(userTeam.isPresent()) {
             menuLayoutBuilder.withTeamManagementView();
+            menuLayoutBuilder.withCreateEventMenuOption();
         } else menuLayoutBuilder.withTeamFormView();
-        return menuLayoutBuilder.withCreateEventMenuOption().withLogoutMenuOption().build();
+        return menuLayoutBuilder.withLogoutMenuOption().build();
     }
 
-    @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
+    @WebServlet(urlPatterns = "/my-team-manager/*", name = "MyUIServlet", asyncSupported = true)
     @VaadinServletConfiguration(ui = MyTeamManagerUI.class, productionMode = false)
     public static class MyUIServlet extends VaadinServlet {
 
@@ -113,6 +124,7 @@ public class MyTeamManagerUI extends UI {
 
     public void navigateTo(Tree.ItemClick menuItem) {
         if(menuItem.getItem() == MenuLayout.LOG_OUT_MENU_OPTION) {
+            SecurityContextHolder.getContextHolderStrategy().clearContext();
             getLoginPage();
             Page.getCurrent().reload();
         } else {

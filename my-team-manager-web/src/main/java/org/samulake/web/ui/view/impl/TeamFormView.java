@@ -10,24 +10,30 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import org.samulake.web.core.dto.TeamDto;
+import org.samulake.web.service.ITeamService;
+import org.samulake.web.ui.controller.TeamFormController;
 import org.samulake.web.ui.view.ITeamFormView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.util.Observable;
+
 @UIScope
-@SpringView(name = ITeamFormView.ITeamFormController.VIEW_URL)
-public class TeamFormView extends VerticalLayout implements ITeamFormView {
+@SpringView(name = ITeamFormView.VIEW_URL)
+public abstract class TeamFormView extends VerticalLayout implements ITeamFormView<TeamFormController, ITeamService> {
     private TextField teamNameTextField;
     private Button submitButton;
     private Binder<TeamDto> binder;
 
-    private ITeamFormController controller;
+    private TeamFormController controller;
+    private ITeamService model;
 
     @Autowired
-    public TeamFormView(@Qualifier("teamFormController") ITeamFormController controller) {
-        this.controller = controller;
-        controller.setView(this);
-        init(new TeamDto());
+    public TeamFormView(@Qualifier("teamFormController") TeamFormController controller, @Qualifier("teamService") ITeamService model) {
+        initModel(model);
+        initController(controller);
+
+        initComponents(new TeamDto());
     }
 
     @Override
@@ -37,11 +43,10 @@ public class TeamFormView extends VerticalLayout implements ITeamFormView {
 
     @Override
     public String getUrl() {
-        return ITeamFormView.ITeamFormController.VIEW_URL;
+        return ITeamFormView.VIEW_URL;
     }
 
-    @Override
-    public final void init(TeamDto teamDto) {
+    public final void initComponents(TeamDto teamDto) {
         createFormFields();
         addListenersToFields();
         bindFields(teamDto);
@@ -75,13 +80,13 @@ public class TeamFormView extends VerticalLayout implements ITeamFormView {
     private void addListenersToFields() {
         submitButton.addClickListener(event -> {
             if(binder.isValid()) {
-                controller.onCreateClicked();
+                //controller.onCreateClicked();
             } else Notification.show("Invalid team", Notification.Type.WARNING_MESSAGE);
         });
     }
 
     @Override
-    public TeamDto getModel() {
-        return binder.getBean();
+    public void update(Observable o, Object arg) {
+
     }
 }

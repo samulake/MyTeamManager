@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.CascadeType.*;
 import static org.samulake.web.core.entity.TeamEntity.TABLE_NAME;
 import static org.samulake.web.core.util.EntityPropertiesUtils.*;
 
@@ -31,7 +32,7 @@ public class TeamEntity {
 	@Column(name = "NAME", nullable = false, unique = true)
 	private String name;
 	
-	@OneToMany(cascade={CascadeType.ALL, CascadeType.REMOVE}, fetch= FetchType.EAGER)
+	@OneToMany(cascade = ALL,fetch= FetchType.EAGER)
 	@JoinTable(
 		name="TEAM_MEMBERS",
 		joinColumns=@JoinColumn(name=TeamEntity.IDENTITY_COLUMN_NAME),
@@ -39,7 +40,7 @@ public class TeamEntity {
 	)
 	private List<PersonEntity> members = new ArrayList<>();
 
-	@OneToOne
+	@OneToOne(cascade={PERSIST, REMOVE, REFRESH, DETACH})
 	@JoinColumn(name = "LEADER_KEY")
 	private UserEntity leader;
 

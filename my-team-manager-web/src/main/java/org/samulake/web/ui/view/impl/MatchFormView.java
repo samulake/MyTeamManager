@@ -6,8 +6,11 @@ import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.TextField;
 import org.samulake.web.core.dto.PersonDto;
+import org.samulake.web.service.IEventService;
 import org.samulake.web.ui.controller.EventFormController;
 import org.samulake.web.ui.view.IEventFormView;
+
+import java.util.Observable;
 
 @UIScope
 @SpringView(name= IEventFormView.MATCH_VIEW_URL)
@@ -33,5 +36,20 @@ public class MatchFormView extends EventFormView {
     @Override
     public String getUrl() {
         return IEventFormView.MATCH_VIEW_URL;
+    }
+
+    @Override
+    public void initModel(IEventService model) {
+
+    }
+
+    @Override
+    public void initController(EventFormController controller) {
+
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
     }
 }

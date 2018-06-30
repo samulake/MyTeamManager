@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 @UIScope
 @SpringComponent
-public class TeamFormController implements ITeamFormView.ITeamFormController{
+public class TeamFormController extends AbstractController<ITeamFormView, ITeamService>{
     private ITeamFormView view;
 
     @Autowired
@@ -21,15 +21,8 @@ public class TeamFormController implements ITeamFormView.ITeamFormController{
     @Autowired
     private UserService userService;
 
-    @Override
-    public void onCreateClicked() {
-        TeamDto model = view.getModel();
-        model.setLeader(userService.getLoggedUserDetails());
-        teamService.createNewTeam(model);
-    }
-
-    @Override
-    public void setView(ITeamFormView view) {
-        this.view = view;
+    public void onCreateClicked(TeamDto teamDto) {
+        teamDto.setLeader(userService.getLoggedUserDetails());
+        teamService.createNewTeam(teamDto);
     }
 }

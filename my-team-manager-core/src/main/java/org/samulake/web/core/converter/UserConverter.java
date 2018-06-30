@@ -9,11 +9,17 @@ import org.springframework.stereotype.Service;
 public class UserConverter extends PersonConverter<UserEntity, UserDto> {
     @Autowired
     private TeamConverter teamConverter;
+    @Autowired
+    private PersonConverter personConverter;
 
     public UserEntity toEntity(UserDto dto) {
+        if(dto == null) {
+            return null;
+        }
         UserEntity userEntity = super.toEntity(dto).cloneProto(new UserEntity());
         userEntity.setUsername(dto.getUsername());
         userEntity.setPassword(dto.getPassword());
+        userEntity.setTeam(teamConverter.toEntity(dto.getTeam()));
         return userEntity;
     }
 

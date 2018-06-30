@@ -1,5 +1,7 @@
 package org.samulake.web.core.dto;
 
+import java.util.Objects;
+
 public class PersonDto {
     private Long id;
 
@@ -51,5 +53,18 @@ public class PersonDto {
         subclass.setFirstName(firstName);
         subclass.setLastName(lastName);
         return subclass;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PersonDto personDto = (PersonDto) o;
+        return Objects.equals(id, personDto.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

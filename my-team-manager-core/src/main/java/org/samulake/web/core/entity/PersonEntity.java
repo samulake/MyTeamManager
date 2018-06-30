@@ -33,6 +33,8 @@ public class PersonEntity {
 	@Column(name = "LAST_NAME")
 	private String lastName;
 
+	private boolean isUser;
+
 
 	public String getFirstName() {
 		return firstName;
@@ -64,4 +66,14 @@ public class PersonEntity {
         subclass.setLastName(lastName);
         return subclass;
     }
+
+	public boolean isUser() {
+		return isUser;
+	}
+
+	public void setUser(boolean user) {
+		isUser = user;
+	}
+
+
 }

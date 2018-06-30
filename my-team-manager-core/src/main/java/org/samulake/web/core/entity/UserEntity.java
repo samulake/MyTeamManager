@@ -19,7 +19,7 @@ public class UserEntity extends PersonEntity implements UserDetails {
 	@Column(name = "ENCODED_PASSWORD", nullable = false)
 	private String password;
 
-	@OneToOne(mappedBy="leader")
+	@OneToOne(mappedBy="leader", cascade=CascadeType.ALL)
 	@JoinColumn(name = TeamEntity.IDENTITY_COLUMN_NAME)
 	private TeamEntity team;
 

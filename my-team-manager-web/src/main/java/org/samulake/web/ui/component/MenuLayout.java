@@ -19,6 +19,10 @@ public class MenuLayout extends VerticalLayout {
 
     private MenuLayout(MenuLayoutBuilder builder) {
         this.menuTreeData = builder.menuTreeData;
+        init();
+    }
+
+    private void init() {
         setWidth("250px");
         Tree<String> menuTree = new Tree<>();
         TreeDataProvider inMemoryDataProvider = new TreeDataProvider<>(menuTreeData);
@@ -26,6 +30,7 @@ public class MenuLayout extends VerticalLayout {
         setItemClickListener(menuTree);
         Panel panel = new Panel("Menu");
         panel.setContent(menuTree);
+        panel.setHeight("500px");
         addComponent(panel);
     }
 
