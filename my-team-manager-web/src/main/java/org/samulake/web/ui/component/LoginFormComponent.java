@@ -17,13 +17,12 @@ public class LoginFormComponent extends LoginForm {
     public LoginFormComponent() {
         usernameTextField = new TextField("Username:");
         passwordField = new PasswordField("Password:");
-        loginButton = new Button("Log in");
+        loginButton = new Button("Login");
 
         binder = new Binder<>();
         binder.setBean(new UserDto());
         binder.bind(usernameTextField, UserDto::getUsername, UserDto::setUsername);
         binder.bind(passwordField, UserDto::getPassword, UserDto::setPassword);
-
         createContent(usernameTextField, passwordField, loginButton);
     }
 
@@ -32,10 +31,19 @@ public class LoginFormComponent extends LoginForm {
     }
 
     @Override
-    public Component getContent() {
-        return super.createContent(usernameTextField, passwordField, loginButton);
+    protected TextField createUsernameField() {
+        return usernameTextField;
     }
 
+    @Override
+    protected PasswordField createPasswordField() {
+        return passwordField;
+    }
+
+    @Override
+    protected Button createLoginButton() {
+        return loginButton;
+    }
 
     public void loginClickListener(Button.ClickListener listener) {
         loginButton.addClickListener(listener);

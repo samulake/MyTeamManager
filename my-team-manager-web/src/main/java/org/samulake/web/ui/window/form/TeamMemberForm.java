@@ -1,5 +1,6 @@
 package org.samulake.web.ui.window.form;
 
+import com.vaadin.data.HasValue;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.TextField;
 import org.samulake.web.core.dto.PersonDto;
@@ -14,8 +15,8 @@ public class TeamMemberForm extends AbstractFormWindow<PersonDto> {
     }
 
     @Override
-    public Map<String, AbstractField> initComponents() {
-        Map<String, AbstractField> fieldMap = new HashMap<>();
+    public Map<String, HasValue<?>> initComponents() {
+        Map<String, HasValue<?>> fieldMap = new HashMap<>();
         fieldMap.put("firstName", new TextField("First name"));
         fieldMap.put("lastName", new TextField("Last name"));
         return fieldMap;

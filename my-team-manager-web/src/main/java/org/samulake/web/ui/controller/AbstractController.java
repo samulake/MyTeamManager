@@ -3,7 +3,7 @@ package org.samulake.web.ui.controller;
 import org.samulake.web.service.Model;
 import org.samulake.web.ui.view.IView;
 
-public abstract class AbstractController<VIEW extends IView, MODEL extends Model> {
+public abstract class AbstractController<VIEW extends IView, MODEL extends Model> implements CrudEventHandler {
     private VIEW view;
     private MODEL model;
 
@@ -22,5 +22,25 @@ public abstract class AbstractController<VIEW extends IView, MODEL extends Model
 
     public <DTO> void update(DTO dto) {
         model.updateData(dto);
+    }
+
+    @Override
+    public void onDeleteClicked() {
+
+    }
+
+    @Override
+    public void onAddClicked() {
+
+    }
+
+    @Override
+    public void onEditClicked() {
+
+    }
+
+    @Override
+    public void onSaveClicked() {
+
     }
 }

@@ -1,8 +1,8 @@
 package org.samulake.web.ui.controller;
 
-public interface CrudEventHandler {
-    void onSaveClicked();
+import org.samulake.web.ui.events.SaveEventHandler;
 
+public interface CrudEventHandler extends SaveEventHandler {
     void onDeleteClicked();
 
     void onAddClicked();

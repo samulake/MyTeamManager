@@ -3,15 +3,14 @@ package org.samulake.web.ui.component;
 import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Panel;
+import org.samulake.web.ui.component.annotation.ViewComponent;
 
 public class CrudPanel extends Panel {
     private Button addButton;
     private Button editButton;
     private Button deleteButton;
 
-    private AbstractLayout layout;
-
-    public CrudPanel(CrudPanelBuilder builder) {
+    private CrudPanel(CrudPanelBuilder builder) {
         this.addButton = builder.addButton;
         this.editButton = builder.editButton;
         this.deleteButton = builder.deleteButton;
@@ -22,24 +21,12 @@ public class CrudPanel extends Panel {
         return addButton;
     }
 
-    public void setAddButton(Button addButton) {
-        this.addButton = addButton;
-    }
-
     public Button getEditButton() {
         return editButton;
     }
 
-    public void setEditButton(Button editButton) {
-        this.editButton = editButton;
-    }
-
     public Button getDeleteButton() {
         return deleteButton;
-    }
-
-    public void setDeleteButton(Button deleteButton) {
-        this.deleteButton = deleteButton;
     }
 
     public static class CrudPanelBuilder {

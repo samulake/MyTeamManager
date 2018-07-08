@@ -30,4 +30,8 @@ public class PlaceDto {
     public void setCity(CityDto city) {
         this.city = city;
     }
+
+    public String getPlaceDetails() {
+        return getCity().getName() + ", " + getStreetAndNr();
+    }
 }

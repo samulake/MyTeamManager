@@ -20,9 +20,4 @@ public class TeamFormController extends AbstractController<ITeamFormView, ITeamS
 
     @Autowired
     private UserService userService;
-
-    public void onCreateClicked(TeamDto teamDto) {
-        teamDto.setLeader(userService.getLoggedUserDetails());
-        teamService.createNewTeam(teamDto);
-    }
 }

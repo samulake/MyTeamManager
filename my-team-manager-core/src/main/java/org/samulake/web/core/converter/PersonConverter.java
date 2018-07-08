@@ -5,26 +5,32 @@ import org.samulake.web.core.entity.PersonEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PersonConverter<ENTITY extends PersonEntity, DTO extends PersonDto> extends AbstractConverter<ENTITY, DTO> {
+public class PersonConverter extends AbstractConverter<PersonEntity, PersonDto>{
 
-	@Override
-	public PersonEntity toEntity(PersonDto dto) {
+	public <ENTITY extends PersonEntity, DTO extends PersonDto> ENTITY toEntity(ENTITY entity, DTO dto) {
 		if(dto == null) {
 			return null;
 		}
-		PersonEntity person = new PersonEntity();
-		person.setId(dto.getId());
-		person.setFirstName(dto.getFirstName());
-		person.setLastName(dto.getLastName());
-		return person;
+		entity.setId(dto.getId());
+		entity.setFirstName(dto.getFirstName());
+		entity.setLastName(dto.getLastName());
+		return entity;
+	}
+
+	public <ENTITY extends PersonEntity, DTO extends PersonDto> DTO toDto(ENTITY entity, DTO dto) {
+		dto.setId(entity.getId());
+		dto.setFirstName(entity.getFirstName());
+		dto.setLastName(entity.getLastName());
+		return dto;
+	}
+
+	@Override
+	public PersonEntity toEntity(PersonDto personDto) {
+		return toEntity(new PersonEntity(),personDto);
 	}
 
 	@Override
 	public PersonDto toDto(PersonEntity entity) {
-		PersonDto personDto = new PersonDto();
-		personDto.setId(entity.getId());
-		personDto.setFirstName(entity.getFirstName());
-		personDto.setLastName(entity.getLastName());
-		return personDto;
+		return toDto(entity, new PersonDto());
 	}
 }

@@ -5,17 +5,16 @@ import com.vaadin.data.provider.TreeDataProvider;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Tree;
 import com.vaadin.ui.VerticalLayout;
-import org.samulake.web.ui.window.MyTeamManagerUI;
+import org.samulake.web.ui.window.form.WindowUtils;
 
 public class MenuLayout extends VerticalLayout {
-    public static final String MY_TEAM_MENU_OPTION = "My team";
+    public static final String MY_TEAM_MENU_OPTION = "Team management";
+    public static final String MATCHES_MENU_OPTION = "Matches";
+    public static final String TRENING_MENU_OPTION = "Trening";
     public static final String CREATE_TEAM_MENU_OPTION = "Create team";
-    public static final String CREATE_EVENT_MENU_OPTION = "Create event";
-    public static final String CREATE_EVENT_TRENING_MENU_OPTION = "Trening";
-    public static final String CREATE_EVENT_MATCH_MENU_OPTION = "Match";
     public static final String LOG_OUT_MENU_OPTION = "Log out";
 
-    private TreeData<String> menuTreeData = new TreeData<>();
+    private TreeData<String> menuTreeData;
 
     private MenuLayout(MenuLayoutBuilder builder) {
         this.menuTreeData = builder.menuTreeData;
@@ -23,7 +22,7 @@ public class MenuLayout extends VerticalLayout {
     }
 
     private void init() {
-        setWidth("250px");
+        setWidth("300px");
         Tree<String> menuTree = new Tree<>();
         TreeDataProvider inMemoryDataProvider = new TreeDataProvider<>(menuTreeData);
         menuTree.setDataProvider(inMemoryDataProvider);
@@ -37,7 +36,7 @@ public class MenuLayout extends VerticalLayout {
     private void setItemClickListener(Tree<String> tree) {
         Tree.ItemClickListener listener = selection -> {
             try {
-                MyTeamManagerUI.current().navigateTo(selection);
+                WindowUtils.currentUI().navigateTo(selection);
             } catch (NullPointerException e) {
 
             }
@@ -53,15 +52,18 @@ public class MenuLayout extends VerticalLayout {
             return this;
         }
 
-        public MenuLayoutBuilder withTeamFormView() {
-            menuTreeData.addItem(null,CREATE_TEAM_MENU_OPTION);
+        public MenuLayoutBuilder withMatchView() {
+            menuTreeData.addItem(null, MATCHES_MENU_OPTION);
             return this;
         }
 
-        public MenuLayoutBuilder withCreateEventMenuOption() {
-            menuTreeData.addItem(null,CREATE_EVENT_MENU_OPTION);
-            menuTreeData.addItem(CREATE_EVENT_MENU_OPTION,CREATE_EVENT_TRENING_MENU_OPTION);
-            menuTreeData.addItem(CREATE_EVENT_MENU_OPTION,CREATE_EVENT_MATCH_MENU_OPTION);
+        public MenuLayoutBuilder withTeamFormView() {
+            menuTreeData.addItem(null, CREATE_TEAM_MENU_OPTION);
+            return this;
+        }
+
+        public MenuLayoutBuilder withTreningView() {
+            menuTreeData.addItem(null, TRENING_MENU_OPTION);
             return this;
         }
 

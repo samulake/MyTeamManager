@@ -10,13 +10,9 @@ import java.util.Observer;
 public interface IView<CONTROLLER extends AbstractController, MODEL extends Model> extends View, Observer {
     String getUrl();
 
-    void initModel(MODEL model);
-
-    void initController(CONTROLLER controller);
-
     default void showWarning(String message) {
         Notification.show(message, Notification.Type.WARNING_MESSAGE);
     }
 
-
+    void initViewComponents();
 }
