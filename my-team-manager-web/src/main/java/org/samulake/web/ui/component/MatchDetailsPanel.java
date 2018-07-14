@@ -1,20 +1,25 @@
 package org.samulake.web.ui.component;
 
 import com.vaadin.ui.AbstractComponent;
+import com.vaadin.ui.Label;
 import org.samulake.web.core.dto.MatchDto;
+import org.samulake.web.ui.controller.CrudEventHandler;
 
 public class MatchDetailsPanel extends EventDetailsPanel<MatchDto> {
-    public MatchDetailsPanel(MatchDto event) {
-        super(event);
+    private Label teamsLabel;
+
+    public MatchDetailsPanel(MatchDto event, CrudEventHandler eventHandler) {
+        super(event, eventHandler);
     }
 
     @Override
     protected void setOtherEventDetails(MatchDto event) {
-
+        teamsLabel.setValue(event.getHomeTeam() + " - " + event.getVisitorTeam());
     }
 
     @Override
     protected AbstractComponent getOtherEventDetailsComponent() {
-        return null;
+        teamsLabel = new Label();
+        return teamsLabel;
     }
 }

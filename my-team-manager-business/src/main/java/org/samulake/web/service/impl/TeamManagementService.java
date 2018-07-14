@@ -8,14 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TeamManagementService implements ITeamManagementService {
+public class TeamManagementService extends AbstractService<TeamDto, TeamDao> implements ITeamManagementService {
+
     @Autowired
-    private TeamDao teamDao;
+    public TeamManagementService(TeamDao teamDao) {
+        super(teamDao);
+    }
 
     @Override
     public void renameTeam(TeamDto teamDto, String newName) {
         teamDto.setName(newName);
-        teamDao.save(teamDto);
+        getDao().save(teamDto);
     }
 
     @Override

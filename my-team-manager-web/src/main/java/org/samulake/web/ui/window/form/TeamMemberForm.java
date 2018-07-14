@@ -10,8 +10,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TeamMemberForm extends AbstractFormWindow<PersonDto> {
+    public static final String FIRST_NAME_PROPERTY_ID = "firstName";
+    public static final String LAST_NAME_PROPERTY_ID = "lastName";
+
     public TeamMemberForm(PersonDto teamDto, CrudEventHandler eventHandler) {
         super(teamDto, eventHandler);
+    }
+
+    @Override
+    protected void bindComponents(PersonDto personDto) {
+        defaultBindComponent(FIRST_NAME_PROPERTY_ID);
+        defaultBindComponent(LAST_NAME_PROPERTY_ID);
     }
 
     @Override

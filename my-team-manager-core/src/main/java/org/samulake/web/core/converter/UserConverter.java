@@ -19,7 +19,8 @@ public class UserConverter extends AbstractConverter<UserEntity, UserDto> {
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername(dto.getUsername());
         userEntity.setPassword(dto.getPassword());
-        userEntity.setTeam(teamConverter.toEntity(dto.getTeam()));
+        if(dto.getTeam() != null)
+            userEntity.setTeam(teamConverter.toEntity(dto.getTeam()));
         return personConverter.toEntity(userEntity, dto);
     }
 

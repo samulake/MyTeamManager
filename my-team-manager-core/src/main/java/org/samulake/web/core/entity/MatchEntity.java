@@ -7,8 +7,8 @@ import static org.samulake.web.core.util.EntityPropertiesUtils.*;
 
 @Entity
 @Table(name=TABLE_NAME)
-@SequenceGenerator(name=SEQUENCE_GENERATOR_NAME, sequenceName = SEQUENCE_NAME, allocationSize = 1)
 @AttributeOverride(name = "id", column = @Column(name=MatchEntity.IDENTITY_COLUMN_NAME))
+@SequenceGenerator(name=EventEntity.DEFAULT_GENERATOR_NAME, sequenceName = SEQUENCE_NAME, allocationSize = 1)
 public class MatchEntity extends EventEntity {
     public static final String TABLE_NAME = "MATCH";
     public static final String SEQUENCE_NAME = DEFAULT_SEQUENCE_NAME_PREFIX + TABLE_NAME + DEFAULT_IDENTITY_COLUMN_NAME_SUFFIX;

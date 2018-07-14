@@ -4,9 +4,11 @@ import javax.persistence.*;
 import java.util.Date;
 
 @MappedSuperclass
-public abstract class EventEntity {
+public class EventEntity {
+    public static final String DEFAULT_GENERATOR_NAME = "default_event_seq_generator";
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = DEFAULT_GENERATOR_NAME)
     private Long id;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -17,7 +19,7 @@ public abstract class EventEntity {
     @JoinColumn(name = PlaceEntity.IDENTITY_COLUMN_NAME)
     private PlaceEntity place;
 
-    protected EventEntity() {
+    public EventEntity() {
     }
 
     public Long getId() {

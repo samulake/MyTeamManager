@@ -43,4 +43,9 @@ public class TeamDto {
     public void setLeader(UserDto leader) {
         this.leader = leader;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

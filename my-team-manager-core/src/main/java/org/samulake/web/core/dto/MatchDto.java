@@ -2,9 +2,9 @@ package org.samulake.web.core.dto;
 
 public class MatchDto extends EventDto {
 
-    private TeamDto homeTeam;
+    private TeamDto homeTeam = new TeamDto();
 
-    private TeamDto visitorTeam;
+    private TeamDto visitorTeam = new TeamDto();
 
     private String result;
 

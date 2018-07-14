@@ -24,7 +24,7 @@ public class ComponentsExtractorUtils {
         if(viewObjectInstance != null) {
             return getAllFields(viewObjectInstance.getClass()).stream()
                     .filter(isViewComponentPredicate())
-                    .collect(Collectors.toMap(Field::getName, getFieldValue(viewObjectInstance)));
+                    .collect(Collectors.toMap(Field::getName, getFieldValueFunction(viewObjectInstance)));
         } else return new HashMap<>();
     }
 
@@ -37,7 +37,7 @@ public class ComponentsExtractorUtils {
         return fields;
     }
 
-    private static Function<Field, Component> getFieldValue(Object viewObjectInstance) {
+    private static Function<Field, Component> getFieldValueFunction(Object viewObjectInstance) {
         return field -> {
             try {
                 field.setAccessible(true);

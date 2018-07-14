@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Observable;
+import javax.annotation.PostConstruct;
 
 @Service
 public class UserService extends AbstractService<UserDto, UserDao> implements IUserService, Model<UserDto> {
@@ -27,6 +27,11 @@ public class UserService extends AbstractService<UserDto, UserDao> implements IU
     @Autowired
     public UserService(UserDao userDao) {
         super(userDao);
+    }
+
+    @PostConstruct
+    private void addTestUser() {
+        //registrationUserService.save("test", "test", "test");
     }
 
     @Override

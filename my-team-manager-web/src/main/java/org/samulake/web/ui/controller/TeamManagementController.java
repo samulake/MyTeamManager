@@ -18,6 +18,7 @@ public class TeamManagementController extends AbstractController<TeamManagementV
     public void onSaveClicked() {
         PersonDto formData = getView().getFormData();
         TeamDto userTeam = getModel().getUserTeam();
+        userTeam.getMembers().removeIf(item -> item.getId().equals(formData.getId()));
         userTeam.getMembers().add(formData);
         getModel().updateData(userTeam);
     }

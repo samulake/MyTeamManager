@@ -12,21 +12,25 @@ public class EventConverter extends AbstractConverter<EventEntity, EventDto> {
 
     @Override
     public EventEntity toEntity(EventDto eventDto) {
-        EventEntity eventEntity = new EventEntity() {
-        };
-        eventEntity.setId(eventDto.getId());
-        eventEntity.setDateTime(eventDto.getDateTime());
-        eventEntity.setPlace(placeConverter.toEntity(eventDto.getPlace()));
-        return eventEntity;
+        return toEntity(new EventEntity(), eventDto);
     }
 
     @Override
     public EventDto toDto(EventEntity eventEntity) {
-        EventDto eventDto = new EventDto() {
-        };
-        eventDto.setId(eventEntity.getId());
-        eventDto.setDateTime(eventEntity.getDateTime());
-        eventDto.setPlace(placeConverter.toDto(eventEntity.getPlace()));
+        return toDto(eventEntity,new EventDto());
+    }
+
+    public <ENTITY extends EventEntity, DTO extends EventDto> ENTITY toEntity(ENTITY eventEntity, DTO dto) {
+        eventEntity.setId(dto.getId());
+        eventEntity.setDateTime(dto.getDateTime());
+        eventEntity.setPlace(placeConverter.toEntity(dto.getPlace()));
+        return eventEntity;
+    }
+
+    public <ENTITY extends EventEntity, DTO extends EventDto> DTO toDto(ENTITY entity, DTO eventDto) {
+        eventDto.setId(entity.getId());
+        eventDto.setDateTime(entity.getDateTime());
+        eventDto.setPlace(placeConverter.toDto(entity.getPlace()));
         return eventDto;
     }
 }

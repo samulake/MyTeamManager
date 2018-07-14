@@ -40,7 +40,7 @@ public class TeamEntity {
 	)
 	private List<PersonEntity> members = new ArrayList<>();
 
-	@OneToOne(cascade={PERSIST, REMOVE, REFRESH, DETACH})
+	@OneToOne
 	@JoinColumn(name = "LEADER_KEY")
 	private UserEntity leader;
 

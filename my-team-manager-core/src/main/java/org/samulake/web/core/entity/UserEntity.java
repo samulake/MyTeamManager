@@ -7,6 +7,11 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REFRESH;
+import static javax.persistence.CascadeType.REMOVE;
+
 @Entity
 @Table(name= UserEntity.TABLE_NAME)
 public class UserEntity extends PersonEntity implements UserDetails {
@@ -19,7 +24,7 @@ public class UserEntity extends PersonEntity implements UserDetails {
 	@Column(name = "ENCODED_PASSWORD", nullable = false)
 	private String password;
 
-	@OneToOne(mappedBy="leader", cascade=CascadeType.ALL)
+	@OneToOne(mappedBy="leader")
 	@JoinColumn(name = TeamEntity.IDENTITY_COLUMN_NAME)
 	private TeamEntity team;
 

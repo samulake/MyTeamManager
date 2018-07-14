@@ -19,25 +19,34 @@ public class MatchController extends AbstractController<MatchView, IEventService
     @Qualifier("teamService")
     private ITeamService teamService;
 
+    private MatchDto formData;
+
     @Override
     public void onDeleteClicked() {
-
+        getModel().remove(formData);
     }
 
     @Override
     public void onAddClicked() {
-        MatchDto newMatch = new MatchDto();
-        newMatch.setHomeTeam(teamService.getUserTeam());
+        formData = new MatchDto();
+        formData.setHomeTeam(teamService.getUserTeam());
         getView().showFormWindow(new MatchDto());
     }
 
     @Override
     public void onEditClicked() {
-
+        getView().showFormWindow(formData);
     }
 
     @Override
     public void onSaveClicked() {
+        MatchDto match = getView().getFormData();
+        match.setHomeTeam(teamService.getUserTeam());
+        getModel().create(match);
+    }
 
+    @Override
+    public <T> void setFormData(T formData) {
+        this.formData = (MatchDto) formData;
     }
 }

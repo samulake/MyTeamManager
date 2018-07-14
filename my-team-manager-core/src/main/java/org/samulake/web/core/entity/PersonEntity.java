@@ -75,5 +75,4 @@ public class PersonEntity {
 		isUser = user;
 	}
 
-
 }

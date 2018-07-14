@@ -1,6 +1,7 @@
 package org.samulake.web.ui.window.form;
 
 import com.vaadin.data.Binder;
+import com.vaadin.data.HasItems;
 import com.vaadin.data.HasValue;
 import com.vaadin.data.converter.LocalDateTimeToDateConverter;
 import com.vaadin.ui.AbstractLayout;
@@ -14,21 +15,21 @@ import org.samulake.web.ui.events.SaveEventHandler;
 import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public abstract class AbstractFormWindow<BEAN> extends Window {
     private AbstractLayout layout;
 
     private Button saveButton;
 
-    private Binder<BEAN> binder;
+    protected Binder<BEAN> binder;
 
-    private Map<String, HasValue<?>> fieldsMap;
+    protected final Map<String, HasValue<?>> fieldsMap;
 
     public AbstractFormWindow(BEAN bean, SaveEventHandler eventHandler) {
         layout = new FormLayout();
         setContent(layout);
-        fieldsMap = new HashMap<>();
+        binder = new Binder(bean.getClass());
+        binder.setBean(bean);
         saveButton = new Button("Save");
         fieldsMap = initComponents();
         bindComponents(bean);
@@ -50,31 +51,19 @@ public abstract class AbstractFormWindow<BEAN> extends Window {
         });
     }
 
-    protected void bindComponents(BEAN bean) {
-        binder = new Binder(bean.getClass());
-        binder.setBean(bean);
-        fieldsMap.entrySet().stream().forEach(BindComponentConsumer());
+    protected abstract void bindComponents(BEAN bean);
+
+    protected void defaultBindComponent(String propertyId) {
+        binder.forField(fieldsMap.get(propertyId)).bind(propertyId);
     }
 
-    private Consumer<Map.Entry<String, HasValue<?>>> BindComponentConsumer() {
-        return fieldEntry -> {
-            if(fieldEntry.getValue() instanceof DateTimeField) {
+    protected void defaultDateTimeBindComponent(String propertyId) {
+        if(fieldsMap.get(propertyId) instanceof DateTimeField) {
                 binder
-                    .forField((DateTimeField)fieldEntry.getValue())
+                    .forField((DateTimeField)fieldsMap.get(propertyId))
                     .withConverter(new LocalDateTimeToDateConverter(ZoneId.systemDefault()))
-                    .bind(fieldEntry.getKey());
-            } else if (!isFirstLevelProperty(fieldEntry.getKey())){
-                defaultBindComponent(fieldEntry);
+                    .bind(propertyId);
             }
-        };
-    }
-
-    private boolean isFirstLevelProperty(String propertyName) {
-        return propertyName.contains(".");
-    }
-
-    private void defaultBindComponent(Map.Entry<String, HasValue<?>> fieldEntry) {
-        binder.forField(fieldEntry.getValue()).bind(fieldEntry.getKey());
     }
 
     public abstract Map<String, HasValue<?>> initComponents();

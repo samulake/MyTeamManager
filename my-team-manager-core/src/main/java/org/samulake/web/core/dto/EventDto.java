@@ -2,7 +2,7 @@ package org.samulake.web.core.dto;
 
 import java.util.Date;
 
-public abstract class EventDto {
+public class EventDto {
     private Long id;
 
     private Date dateTime;

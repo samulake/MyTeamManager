@@ -7,11 +7,16 @@ import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
+import org.samulake.web.core.dto.EventDto;
+import org.samulake.web.core.dto.MatchDto;
 import org.samulake.web.core.dto.PersonDto;
 import org.samulake.web.core.dto.TeamDto;
+import org.samulake.web.service.IEventService;
 import org.samulake.web.service.ITeamService;
 import org.samulake.web.service.impl.TeamService;
 import org.samulake.web.ui.component.CrudPanel;
+import org.samulake.web.ui.component.EventDetailsPanel;
+import org.samulake.web.ui.component.MatchDetailsPanel;
 import org.samulake.web.ui.component.annotation.ViewComponent;
 import org.samulake.web.ui.controller.TeamManagementController;
 import org.samulake.web.ui.view.FormWindowHandler;
@@ -20,6 +25,7 @@ import org.samulake.web.ui.window.form.AbstractFormWindow;
 import org.samulake.web.ui.window.form.TeamMemberForm;
 import org.samulake.web.ui.window.form.WindowUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.vaadin.addon.calendar.Calendar;
 
 import java.util.List;
@@ -43,9 +49,13 @@ public class TeamManagementView extends AbstractView<TeamManagementController, T
     private CrudPanel crudPanel;
 
     @ViewComponent(name = "nextMatchPanel")
-    Panel nextMatchPanel;
+    EventDetailsPanel<? extends EventDto> nextMatchPanel;
 
     private AbstractFormWindow<PersonDto> teamMemberForm;
+
+    @Autowired
+    @Qualifier()
+    private IEventService<? extends EventDto> eventService;
 
     @Autowired
     public TeamManagementView(TeamManagementController controller, TeamService model) {
@@ -82,7 +92,7 @@ public class TeamManagementView extends AbstractView<TeamManagementController, T
         squadGrid.addColumn(PersonDto::getFirstName).setCaption("Name");
         squadGrid.addColumn(PersonDto::getLastName).setCaption("Surname");
 
-        nextMatchPanel = new Panel("Next event panel");
+        nextMatchPanel = new MatchDetailsPanel(new MatchDto(),getController());
 
         calendar = new Calendar();
         addListenersToCrudButtons();

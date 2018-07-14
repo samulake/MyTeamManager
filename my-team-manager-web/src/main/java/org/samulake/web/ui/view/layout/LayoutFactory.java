@@ -34,7 +34,10 @@ public class LayoutFactory {
 
     public static CreateLayout getTeamFormLayout() {
         return viewComponents -> {
-            return new VerticalLayout();
+            VerticalLayout layout = new VerticalLayout();
+            layout.addComponents(viewComponents.get("teamNameTextField"));
+            layout.addComponent(viewComponents.get("createButton"));
+            return layout;
         };
     }
 

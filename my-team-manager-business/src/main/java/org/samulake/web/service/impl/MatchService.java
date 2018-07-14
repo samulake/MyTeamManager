@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class MatchService extends AbstractService<MatchDto, MatchDao> implements IEventService<MatchDto> {
@@ -16,4 +18,13 @@ public class MatchService extends AbstractService<MatchDto, MatchDao> implements
         super(matchDao);
     }
 
+    @Override
+    public List<MatchDto> getUserTeamEvents() {
+        return null;
+    }
+
+    @Override
+    public MatchDto getFirstOncomingEvent() {
+        return null;
+    }
 }

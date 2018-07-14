@@ -3,13 +3,13 @@ package org.samulake.web.ui.component;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Label;
 import org.samulake.web.core.dto.TreningDto;
+import org.samulake.web.ui.controller.CrudEventHandler;
 
 public class TreningDetailsPanel extends EventDetailsPanel<TreningDto> {
     private Label squadLabel;
 
-    public TreningDetailsPanel(TreningDto event) {
-        super(event);
-        squadLabel = new Label(event.getTeam().getMembers().toString());
+    public TreningDetailsPanel(TreningDto event, CrudEventHandler eventHandler) {
+        super(event, eventHandler);
     }
 
     @Override
@@ -19,6 +19,7 @@ public class TreningDetailsPanel extends EventDetailsPanel<TreningDto> {
 
     @Override
     protected AbstractComponent getOtherEventDetailsComponent() {
+        squadLabel = new Label("Squad");
         return squadLabel;
     }
 }

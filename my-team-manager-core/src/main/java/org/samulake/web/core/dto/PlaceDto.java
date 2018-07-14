@@ -34,4 +34,9 @@ public class PlaceDto {
     public String getPlaceDetails() {
         return getCity().getName() + ", " + getStreetAndNr();
     }
+
+    @Override
+    public String toString() {
+        return streetAndNr + ", " + city;
+    }
 }
