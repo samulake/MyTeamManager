@@ -5,17 +5,12 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.UI;
-import org.samulake.web.core.dto.EventDto;
-import org.samulake.web.core.dto.MatchDto;
 import org.samulake.web.core.dto.PersonDto;
 import org.samulake.web.core.dto.TeamDto;
-import org.samulake.web.service.IEventService;
+import org.samulake.web.service.IMatchService;
 import org.samulake.web.service.ITeamService;
 import org.samulake.web.service.impl.TeamService;
-import org.samulake.web.ui.component.CrudPanel;
-import org.samulake.web.ui.component.EventDetailsPanel;
+import org.samulake.web.ui.component.DataOperationsPanel;
 import org.samulake.web.ui.component.MatchDetailsPanel;
 import org.samulake.web.ui.component.annotation.ViewComponent;
 import org.samulake.web.ui.controller.TeamManagementController;
@@ -23,7 +18,6 @@ import org.samulake.web.ui.view.FormWindowHandler;
 import org.samulake.web.ui.view.ITeamManagementView;
 import org.samulake.web.ui.window.form.AbstractFormWindow;
 import org.samulake.web.ui.window.form.TeamMemberForm;
-import org.samulake.web.ui.window.form.WindowUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.vaadin.addon.calendar.Calendar;
@@ -37,7 +31,7 @@ import static org.samulake.web.ui.window.form.WindowUtils.addWindow;
 
 @UIScope
 @SpringView(name = ITeamManagementView.VIEW_URL)
-public class TeamManagementView extends AbstractView<TeamManagementController, TeamService> implements ITeamManagementView, FormWindowHandler<PersonDto> {
+public class TeamManagementView extends AbstractView<TeamManagementController, ITeamService> implements ITeamManagementView, FormWindowHandler<PersonDto> {
 
     @ViewComponent(name = "squadGrid")
     private Grid<PersonDto> squadGrid;
@@ -45,20 +39,20 @@ public class TeamManagementView extends AbstractView<TeamManagementController, T
     @ViewComponent(name = "calendar")
     private Calendar calendar;
 
-    @ViewComponent(name = "teamMemberCrudPanel")
-    private CrudPanel crudPanel;
+    @ViewComponent(name = "dataOperationsPanel")
+    private DataOperationsPanel dataOperationsPanel;
 
     @ViewComponent(name = "nextMatchPanel")
-    EventDetailsPanel<? extends EventDto> nextMatchPanel;
+    MatchDetailsPanel nextMatchPanel;
 
     private AbstractFormWindow<PersonDto> teamMemberForm;
 
     @Autowired
-    @Qualifier()
-    private IEventService<? extends EventDto> eventService;
+    @Qualifier("matchService")
+    private IMatchService matchService;
 
     @Autowired
-    public TeamManagementView(TeamManagementController controller, TeamService model) {
+    public TeamManagementView(TeamManagementController controller, @Qualifier("teamService") ITeamService model) {
         super(controller,model, getTeamManagementLayout());
     }
 
@@ -76,7 +70,9 @@ public class TeamManagementView extends AbstractView<TeamManagementController, T
 
     @Override
     public void showOncomingEvents() {
-
+        if(matchService.getFirstOncomingEvent() != null) {
+            nextMatchPanel.setEvent(matchService.getFirstOncomingEvent());
+        }
     }
 
     @Override
@@ -86,22 +82,22 @@ public class TeamManagementView extends AbstractView<TeamManagementController, T
 
     @Override
     public void initViewComponents() {
-        crudPanel = new CrudPanel.CrudPanelBuilder(new HorizontalLayout()).withAddEditDeleteButtons().build();
+        dataOperationsPanel = new DataOperationsPanel.DataOperationsPanelBuilder(new HorizontalLayout()).withAddEditDeleteButtons().build();
 
         squadGrid = new Grid<>("Squad");
         squadGrid.addColumn(PersonDto::getFirstName).setCaption("Name");
         squadGrid.addColumn(PersonDto::getLastName).setCaption("Surname");
 
-        nextMatchPanel = new MatchDetailsPanel(new MatchDto(),getController());
+        nextMatchPanel = new MatchDetailsPanel(getController());
 
         calendar = new Calendar();
         addListenersToCrudButtons();
     }
 
     private void addListenersToCrudButtons() {
-        crudPanel.getAddButton().addClickListener(event -> getController().onAddClicked());
-        crudPanel.getEditButton().addClickListener(event -> getController().onEditClicked());
-        crudPanel.getDeleteButton().addClickListener(event -> getController().onDeleteClicked());
+        dataOperationsPanel.getAddButton().addClickListener(event -> getController().onAddClicked());
+        dataOperationsPanel.getEditButton().addClickListener(event -> getController().onEditClicked());
+        dataOperationsPanel.getDeleteButton().addClickListener(event -> getController().onDeleteClicked());
     }
 
     @Override

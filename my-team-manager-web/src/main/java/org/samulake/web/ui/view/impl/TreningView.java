@@ -11,9 +11,7 @@ import org.samulake.web.ui.component.TreningDetailsPanel;
 import org.samulake.web.ui.controller.TreningController;
 import org.samulake.web.ui.view.FormWindowHandler;
 import org.samulake.web.ui.view.ITreningView;
-import org.samulake.web.ui.window.form.EventForm;
 import org.samulake.web.ui.window.form.TreningForm;
-import org.samulake.web.ui.window.form.WindowUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -21,7 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import static org.samulake.web.ui.view.layout.LayoutFactory.getEventsManagementLayout;
+import static org.samulake.web.ui.view.layout.LayoutFactory.getMatchesManagementLayout;
+import static org.samulake.web.ui.view.layout.LayoutFactory.getTreningManagementLayout;
 import static org.samulake.web.ui.window.form.WindowUtils.*;
 
 @UIScope
@@ -38,7 +37,7 @@ public class TreningView extends EventView<TreningController, IEventService<Tren
 
     @Autowired
     public TreningView(TreningController controller, @Qualifier("treningService") IEventService<TreningDto> model) {
-        super(controller, model, getEventsManagementLayout());
+        super(controller, model, getTreningManagementLayout());
     }
 
     @Override

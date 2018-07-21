@@ -34,7 +34,7 @@ import java.util.Optional;
 import static org.springframework.security.core.context.SecurityContextHolder.MODE_GLOBAL;
 
 @SpringUI(path = "my-team-manager")
-@Theme("valo")
+@Theme("footballTheme")
 @Widgetset("AppWidgetset")
 public class MyTeamManagerUI extends UI {
 	private static final long serialVersionUID = 1L;
@@ -81,6 +81,7 @@ public class MyTeamManagerUI extends UI {
     public void setUserContent() {
         if(layout != null) return;
         layout = new VerticalLayout();
+        layout.addStyleName("backgroundimage");
         layout.setMargin(false);
         headerLayout = new HeaderLayout();
         contentLayout = new VerticalLayout();

@@ -12,9 +12,14 @@ public class MatchDetailsPanel extends EventDetailsPanel<MatchDto> {
         super(event, eventHandler);
     }
 
+    public MatchDetailsPanel(CrudEventHandler eventHandler) {
+        super(eventHandler);
+    }
+
     @Override
     protected void setOtherEventDetails(MatchDto event) {
-        teamsLabel.setValue(event.getHomeTeam() + " - " + event.getVisitorTeam());
+        if(event != null)
+            teamsLabel.setValue(event.getHomeTeam() + " - " + event.getVisitorTeam());
     }
 
     @Override

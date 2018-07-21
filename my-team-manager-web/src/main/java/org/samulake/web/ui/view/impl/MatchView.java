@@ -12,7 +12,6 @@ import org.samulake.web.ui.controller.MatchController;
 import org.samulake.web.ui.view.FormWindowHandler;
 import org.samulake.web.ui.view.IMatchesView;
 import org.samulake.web.ui.view.layout.LayoutFactory;
-import org.samulake.web.ui.window.form.EventForm;
 import org.samulake.web.ui.window.form.MatchForm;
 import org.samulake.web.ui.window.form.WindowUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,7 @@ public class MatchView extends EventView<MatchController, IEventService<MatchDto
 
     @Autowired
     public MatchView(MatchController controller, @Qualifier("matchService") IEventService<MatchDto> model) {
-        super(controller, model, LayoutFactory.getEventsManagementLayout());
+        super(controller, model, LayoutFactory.getMatchesManagementLayout());
     }
 
     @Override

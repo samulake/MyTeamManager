@@ -18,6 +18,7 @@ public class TreningForm extends EventForm<TreningDto> {
 
     public TreningForm(TreningDto eventDto, SaveEventHandler eventHandler) {
         super(eventDto, eventHandler);
+        setWidth("60%");
     }
 
     @Override

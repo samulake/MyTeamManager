@@ -3,17 +3,18 @@ package org.samulake.web.ui.component;
 import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Panel;
-import org.samulake.web.ui.component.annotation.ViewComponent;
 
-public class CrudPanel extends Panel {
+public class DataOperationsPanel extends Panel {
     private Button addButton;
     private Button editButton;
     private Button deleteButton;
+    private Button cancellButton;
 
-    private CrudPanel(CrudPanelBuilder builder) {
+    private DataOperationsPanel(DataOperationsPanelBuilder builder) {
         this.addButton = builder.addButton;
         this.editButton = builder.editButton;
         this.deleteButton = builder.deleteButton;
+        this.cancellButton = builder.cancellButton;
         setContent(builder.layout);
     }
 
@@ -29,41 +30,52 @@ public class CrudPanel extends Panel {
         return deleteButton;
     }
 
-    public static class CrudPanelBuilder {
+    public Button getCancellButton() {
+        return cancellButton;
+    }
+
+    public static class DataOperationsPanelBuilder {
         private Button addButton;
         private Button editButton;
         private Button deleteButton;
+        private Button cancellButton;
 
         private AbstractLayout layout;
 
-        public CrudPanelBuilder(AbstractLayout layout) {
+        public DataOperationsPanelBuilder(AbstractLayout layout) {
             this.layout = layout;
         }
 
-        public CrudPanelBuilder withAddButton() {
+        public DataOperationsPanelBuilder withAddButton() {
             addButton = new Button("Add");
             layout.addComponent(addButton);
             return this;
         }
 
-        public CrudPanelBuilder withEditButton() {
+        public DataOperationsPanelBuilder withEditButton() {
             editButton = new Button("Edit");
             layout.addComponent(editButton);
             return this;
         }
 
-        public CrudPanelBuilder withDeleteButton() {
+        public DataOperationsPanelBuilder withDeleteButton() {
             deleteButton = new Button("Delete");
             layout.addComponent(deleteButton);
             return this;
         }
 
-        public CrudPanelBuilder withAddEditDeleteButtons() {
+        public DataOperationsPanelBuilder withCancellButton() {
+            cancellButton = new Button("Cancell");
+            layout.addComponent(cancellButton);
+            return this;
+        }
+
+        public DataOperationsPanelBuilder withAddEditDeleteButtons() {
             return withAddButton().withEditButton().withDeleteButton();
         }
 
-        public CrudPanel build() {
-            return new CrudPanel(this);
+        public DataOperationsPanel build() {
+            return new DataOperationsPanel(this);
         }
     }
 }
