@@ -30,6 +30,7 @@ public class MenuLayout extends VerticalLayout {
         Panel panel = new Panel("Menu");
         panel.setContent(menuTree);
         panel.setHeight("500px");
+        panel.setStyleName("menu");
         addComponent(panel);
     }
 

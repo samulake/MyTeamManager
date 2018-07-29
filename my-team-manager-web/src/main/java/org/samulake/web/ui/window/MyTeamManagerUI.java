@@ -35,7 +35,6 @@ import static org.springframework.security.core.context.SecurityContextHolder.MO
 
 @SpringUI(path = "my-team-manager")
 @Theme("footballTheme")
-@Widgetset("AppWidgetset")
 public class MyTeamManagerUI extends UI {
 	private static final long serialVersionUID = 1L;
 

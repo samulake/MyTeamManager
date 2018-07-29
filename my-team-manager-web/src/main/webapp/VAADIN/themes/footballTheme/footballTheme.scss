@@ -7,21 +7,26 @@
         background-image: url("img/background.jpg");
         background-attachment: fixed;
         height: 100%;
-
-            /* Center and scale the image nicely */
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
     }
 
     .v-button {
-        color: blue;
+        background: #bbbb77;
         width: 100px;
       }
 
     .v-panel {
-        color: green;
-        background: transparent;
+        color: white;
+        background: rgba(30, 30, 30, 0.65);
+    }
+
+    .menu {
+        background-image: url("img/menuBg.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
     }
 }
 

@@ -20,6 +20,7 @@ public class TreningDetailsPanel extends EventDetailsPanel<TreningDto> {
     @Override
     protected AbstractComponent getOtherEventDetailsComponent() {
         squadLabel = new Label("Squad");
+        squadLabel.setWidth(super.getWidth(), Unit.PIXELS);
         return squadLabel;
     }
 }

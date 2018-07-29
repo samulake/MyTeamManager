@@ -32,25 +32,30 @@
                 <artifactId>vaadin-maven-plugin</artifactId>
                 <version>${vaadin.version}</version>
                 <configuration>
-                    <extraJvmArgs>-Xmx2g -Xss1024k</extraJvmArgs>
-                    <webappDirectory>${basedir}/target/classes/VAADIN/widgetsets</webappDirectory>
-                    <draftCompile>false</draftCompile>
-                    <compileReport>false</compileReport>
-                    <style>OBF</style>
-                    <strict>true</strict>
-                    <runTarget>http://localhost:8080/</runTarget>
-                    <module>AppWidgetset</module>
+                    <webappDirectory>${basedir}/src/main/webapp/</webappDirectory>
+
+                    <hostedWebapp>${basedir}/src/main/webapp/</hostedWebapp>
+
+                    <warSourceDirectory>${basedir}/src/main/webapp/</warSourceDirectory>
                 </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>update-widgetset</goal>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
+
             </plugin>
         </plugins>
+        <resources>
+
+            <resource>
+
+                <directory>src/main/resources</directory>
+
+            </resource>
+
+            <resource>
+
+                <directory>src/main/webapp</directory>
+
+            </resource>
+
+        </resources>
     </build>
 
 

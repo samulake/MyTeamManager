@@ -20,7 +20,6 @@ import org.samulake.web.ui.window.form.AbstractFormWindow;
 import org.samulake.web.ui.window.form.TeamMemberForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.vaadin.addon.calendar.Calendar;
 
 import java.util.List;
 import java.util.Observable;
@@ -35,9 +34,6 @@ public class TeamManagementView extends AbstractView<TeamManagementController, I
 
     @ViewComponent(name = "squadGrid")
     private Grid<PersonDto> squadGrid;
-
-    @ViewComponent(name = "calendar")
-    private Calendar calendar;
 
     @ViewComponent(name = "dataOperationsPanel")
     private DataOperationsPanel dataOperationsPanel;
@@ -90,7 +86,6 @@ public class TeamManagementView extends AbstractView<TeamManagementController, I
 
         nextMatchPanel = new MatchDetailsPanel(getController());
 
-        calendar = new Calendar();
         addListenersToCrudButtons();
     }
 

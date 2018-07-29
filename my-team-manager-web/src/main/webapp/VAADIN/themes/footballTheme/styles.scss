@@ -1,5 +1,7 @@
+@import "addons.scss";
 @import "footballTheme.scss";
 
 .footballTheme {
     @include footballTheme;
+    @include addons;
 }

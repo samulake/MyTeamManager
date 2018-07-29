@@ -31,7 +31,7 @@ public class UserService extends AbstractService<UserDto, UserDao> implements IU
 
     @PostConstruct
     private void addTestUser() {
-        //registrationUserService.save("test", "test", "test");
+        registrationUserService.save("test", "test", "test");
     }
 
     @Override
