@@ -1,12 +1,6 @@
 package org.samulake.web.ui.view.layout;
 
-import com.vaadin.ui.AbstractLayout;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 import org.samulake.web.ui.component.MatchDetailsPanel;
 import org.samulake.web.ui.component.TreningDetailsPanel;
 
@@ -16,18 +10,19 @@ public class LayoutFactory {
     public static CreateLayout getTeamManagementLayout() {
         return viewComponents -> {
             GridLayout layout = new GridLayout(2,3);
-            layout.addComponent(new Label("Team management"));
 
             Component crudPanel = viewComponents.get("dataOperationsPanel");
             crudPanel.setWidth("500px");
+            crudPanel.setCaption("Squad");
 
-            layout.addComponent(crudPanel,0,1);
-            layout.addComponent(viewComponents.get("squadGrid"), 0,2);
+            layout.addComponent(crudPanel,0,0);
+            layout.addComponent(viewComponents.get("squadGrid"), 0,1);
 
             Component nextMatchPanel = viewComponents.get("nextMatchPanel");
             nextMatchPanel.setCaption("Oncoming match");
-            layout.addComponent(nextMatchPanel, 1, 1, 1, 2);
+            layout.addComponent(nextMatchPanel, 1, 0, 1, 1);
             nextMatchPanel.setWidth("450px");
+            nextMatchPanel.setHeight("200px");
 
             return layout;
         };
@@ -38,7 +33,10 @@ public class LayoutFactory {
             VerticalLayout layout = new VerticalLayout();
             layout.addComponents(viewComponents.get("teamNameTextField"));
             layout.addComponent(viewComponents.get("createButton"));
-            return layout;
+
+            Panel panel = new Panel("Create team");
+            panel.setContent(layout);
+            return panel;
         };
     }
 
@@ -46,6 +44,16 @@ public class LayoutFactory {
         return viewComponents -> {
             viewComponents.get("eventsPanel").setCaption("Oncoming matches");
             return getEventManagementLayout(viewComponents);
+        };
+    }
+
+    public static CreateLayout getSettingsLayout() {
+        return viewComponents -> {
+            AbstractLayout layout = new VerticalLayout();
+            Component teamSettingsPanel = viewComponents.get("teamSettingsPanel");
+            teamSettingsPanel.setWidth("600px");
+            layout.addComponent(teamSettingsPanel);
+            return layout;
         };
     }
 

@@ -23,8 +23,8 @@ public class ComponentsExtractorUtils {
         } else return new HashMap<>();
     }
 
-    public static List<Field> getAllFields(Class<?> type) {
-        List<Field> fields = new ArrayList();
+    private static List<Field> getAllFields(Class<?> type) {
+        ArrayList<Field> fields = new ArrayList<Field>();
         if(Optional.ofNullable(type).isPresent()) {
             fields.addAll(Arrays.asList(type.getDeclaredFields()));
             fields.addAll(getAllFields(type.getSuperclass()));

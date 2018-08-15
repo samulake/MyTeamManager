@@ -13,6 +13,7 @@ public class MenuLayout extends VerticalLayout {
     public static final String TRENING_MENU_OPTION = "Trening";
     public static final String CREATE_TEAM_MENU_OPTION = "Create team";
     public static final String LOG_OUT_MENU_OPTION = "Log out";
+    public static final String SETTINGS_MENU_OPTION = "Settings";
 
     private TreeData<String> menuTreeData;
 
@@ -70,6 +71,11 @@ public class MenuLayout extends VerticalLayout {
 
         public MenuLayoutBuilder withLogoutMenuOption() {
             menuTreeData.addItem(null, LOG_OUT_MENU_OPTION);
+            return this;
+        }
+
+        public MenuLayoutBuilder withSettingsMenuOption() {
+            menuTreeData.addItem(null, SETTINGS_MENU_OPTION);
             return this;
         }
 

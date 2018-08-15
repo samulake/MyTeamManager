@@ -32,6 +32,12 @@ public abstract class AbstractService<DTO, DAO extends DataAccessObject<DTO>> ex
     }
 
     @Override
+    public void remove(DTO data) {
+        dao.delete(data);
+        notifyObservers();
+    }
+
+    @Override
     public void updateDataCollection(Collection<? extends DTO> dataCollection) {
         dataCollection.stream().forEach(data -> dao.save(data));
         notifyObservers();
@@ -48,12 +54,6 @@ public abstract class AbstractService<DTO, DAO extends DataAccessObject<DTO>> ex
     public void notifyObservers() {
         setChanged();
         super.notifyObservers();
-    }
-
-    @Override
-    public void remove(DTO data) {
-        dao.delete(data);
-        notifyObservers();
     }
 
     @Override

@@ -13,7 +13,7 @@ import org.samulake.web.service.impl.TeamService;
 import org.samulake.web.ui.component.DataOperationsPanel;
 import org.samulake.web.ui.component.MatchDetailsPanel;
 import org.samulake.web.ui.component.annotation.ViewComponent;
-import org.samulake.web.ui.controller.TeamManagementController;
+import org.samulake.web.ui.controller.TeamController;
 import org.samulake.web.ui.view.FormWindowHandler;
 import org.samulake.web.ui.view.ITeamManagementView;
 import org.samulake.web.ui.window.form.AbstractFormWindow;
@@ -30,7 +30,7 @@ import static org.samulake.web.ui.window.form.WindowUtils.addWindow;
 
 @UIScope
 @SpringView(name = ITeamManagementView.VIEW_URL)
-public class TeamManagementView extends AbstractView<TeamManagementController, ITeamService> implements ITeamManagementView, FormWindowHandler<PersonDto> {
+public class TeamManagementView extends AbstractView<TeamController, ITeamService> implements ITeamManagementView, FormWindowHandler<PersonDto> {
 
     @ViewComponent(name = "squadGrid")
     private Grid<PersonDto> squadGrid;
@@ -39,7 +39,7 @@ public class TeamManagementView extends AbstractView<TeamManagementController, I
     private DataOperationsPanel dataOperationsPanel;
 
     @ViewComponent(name = "nextMatchPanel")
-    MatchDetailsPanel nextMatchPanel;
+    private MatchDetailsPanel nextMatchPanel;
 
     private AbstractFormWindow<PersonDto> teamMemberForm;
 
@@ -48,7 +48,7 @@ public class TeamManagementView extends AbstractView<TeamManagementController, I
     private IMatchService matchService;
 
     @Autowired
-    public TeamManagementView(TeamManagementController controller, @Qualifier("teamService") ITeamService model) {
+    public TeamManagementView(TeamController controller, @Qualifier("teamService") ITeamService model) {
         super(controller,model, getTeamManagementLayout());
     }
 
@@ -60,7 +60,9 @@ public class TeamManagementView extends AbstractView<TeamManagementController, I
 
     @Override
     public void showTeamSquad() {
-        List<PersonDto> squad = getModel().getUserTeam().getMembers();
+        TeamDto userTeam = getModel().getUserTeam();
+        List<PersonDto> squad = userTeam.getMembers();
+        dataOperationsPanel.setCaption("Team " + userTeam.getName());
         squadGrid.setItems(squad);
     }
 
@@ -80,7 +82,7 @@ public class TeamManagementView extends AbstractView<TeamManagementController, I
     public void initViewComponents() {
         dataOperationsPanel = new DataOperationsPanel.DataOperationsPanelBuilder(new HorizontalLayout()).withAddEditDeleteButtons().build();
 
-        squadGrid = new Grid<>("Squad");
+        squadGrid = new Grid<>();
         squadGrid.addColumn(PersonDto::getFirstName).setCaption("Name");
         squadGrid.addColumn(PersonDto::getLastName).setCaption("Surname");
 

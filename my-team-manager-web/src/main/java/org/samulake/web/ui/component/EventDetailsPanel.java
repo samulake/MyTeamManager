@@ -50,7 +50,8 @@ public abstract class EventDetailsPanel<T extends EventDto> extends Panel {
         setContent(layout);
         layout.addComponent(placeLabel, 0,0);
         layout.addComponent(dateTimeLabel, 1,0);
-        layout.addComponent(otherEventDetailsComponent, 0, 1, 1, 1);
+        if(otherEventDetailsComponent != null)
+            layout.addComponent(otherEventDetailsComponent, 0, 1, 1, 1);
         layout.addComponent(editCancellPanel, 0,2,1,2);
     }
 

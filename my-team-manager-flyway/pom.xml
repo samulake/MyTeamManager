@@ -35,9 +35,6 @@
                     <configFile>config/flywayConfig.properties</configFile>
                     <table>SCHEMA_VERSION</table>
                 </configuration>
-                <dependencies>
-
-                </dependencies>
             </plugin>
         </plugins>
     </build>

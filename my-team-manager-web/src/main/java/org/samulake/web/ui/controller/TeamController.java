@@ -12,7 +12,7 @@ import java.util.Set;
 
 @UIScope
 @SpringComponent
-public class TeamManagementController extends AbstractController<TeamManagementView, ITeamService> implements CrudEventHandler {
+public class TeamController extends AbstractController<TeamManagementView, ITeamService> implements CrudEventHandler {
 
     @Override
     public void onSaveClicked() {

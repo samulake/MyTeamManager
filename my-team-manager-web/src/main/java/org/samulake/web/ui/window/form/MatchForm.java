@@ -2,14 +2,9 @@ package org.samulake.web.ui.window.form;
 
 import com.vaadin.data.HasValue;
 import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.TextField;
-import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteTextField;
 import org.samulake.web.core.dto.MatchDto;
 import org.samulake.web.core.dto.TeamDto;
-import org.samulake.web.service.IEventService;
-import org.samulake.web.service.ITeamService;
-import org.samulake.web.service.impl.EventModelService;
+import org.samulake.web.service.impl.DataSourceFacade;
 import org.samulake.web.ui.controller.CrudEventHandler;
 
 import java.util.HashMap;
@@ -39,7 +34,7 @@ public class MatchForm extends EventForm<MatchDto> {
         binder.forField(rivalTextField).bind(matchDto -> matchDto.getVisitorTeam(), (matchDto, team) -> matchDto.setVisitorTeam(team));
     }
 
-    public void setDataSource(EventModelService dataSource) {
+    public void setDataSource(DataSourceFacade dataSource) {
         super.setFormData(dataSource);
         rivalTextField.setItems(dataSource.getAllTeams());
     }

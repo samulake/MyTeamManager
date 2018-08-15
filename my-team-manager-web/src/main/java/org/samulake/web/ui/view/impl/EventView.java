@@ -14,7 +14,7 @@ import java.util.List;
 
 public abstract class EventView<CONTROLLER extends AbstractController, MODEL extends Model> extends AbstractView<CONTROLLER, MODEL> {
     @ViewComponent(name="addDeletePanel")
-    private DataOperationsPanel addDeletePanel;
+    protected DataOperationsPanel addDeletePanel;
     @ViewComponent(name="eventsPanel")
     private EventsPanel eventsPanel;
 
@@ -25,7 +25,6 @@ public abstract class EventView<CONTROLLER extends AbstractController, MODEL ext
 
     protected void addListenersToComponents() {
         addDeletePanel.getAddButton().addClickListener(event -> getController().onAddClicked());
-        addDeletePanel.getDeleteButton().addClickListener(event -> getController().onDeleteClicked());
     }
 
     protected  <T extends EventDto> void addEvents(List<? extends EventDetailsPanel<T>> eventPanels) {
@@ -34,7 +33,7 @@ public abstract class EventView<CONTROLLER extends AbstractController, MODEL ext
 
     @Override
     public void initViewComponents() {
-        addDeletePanel = new DataOperationsPanel.DataOperationsPanelBuilder(new HorizontalLayout()).withAddButton().withDeleteButton().build();
+        addDeletePanel = new DataOperationsPanel.DataOperationsPanelBuilder(new HorizontalLayout()).withAddButton().build();
         eventsPanel = new EventsPanel();
     }
 }

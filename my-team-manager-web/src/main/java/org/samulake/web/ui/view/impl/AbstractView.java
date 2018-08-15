@@ -19,7 +19,7 @@ public abstract class AbstractView<CONTROLLER extends AbstractController, MODEL 
     private MODEL model;
     private CreateLayout layout;
 
-    public AbstractView(CONTROLLER controller, MODEL model, CreateLayout layout) {
+    AbstractView(CONTROLLER controller, MODEL model, CreateLayout layout) {
         this.controller = controller;
         this.model = model;
         this.layout = layout;

@@ -2,6 +2,8 @@ package org.samulake.web.persistence.dao;
 
 import org.samulake.web.core.converter.AbstractConverter;
 import org.samulake.web.core.converter.TeamConverter;
+import org.samulake.web.core.dto.EventDto;
+import org.samulake.web.core.dto.MatchDto;
 import org.samulake.web.core.dto.TeamDto;
 import org.samulake.web.core.dto.TreningDto;
 import org.samulake.web.core.entity.TreningEntity;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Component
@@ -26,5 +29,12 @@ public class TreningDao extends AbstractDao<TreningEntity, TreningDto, Long> {
         TreningRepository treningRepository = (TreningRepository) this.repository;
         List<TreningEntity> trenings = treningRepository.findByTeam(teamConverter.toEntity(dto));
         return converter.toDtoCollection(trenings);
+    }
+
+    @Override
+    public List<TreningDto> findAll() {
+        List<TreningDto> all = super.findAll();
+        all.sort(Comparator.comparing(EventDto::getDateTime));
+        return all;
     }
 }

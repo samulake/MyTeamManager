@@ -25,6 +25,7 @@ public class MatchDetailsPanel extends EventDetailsPanel<MatchDto> {
     @Override
     protected AbstractComponent getOtherEventDetailsComponent() {
         teamsLabel = new Label();
+        teamsLabel.setStyleName("match");
         return teamsLabel;
     }
 }

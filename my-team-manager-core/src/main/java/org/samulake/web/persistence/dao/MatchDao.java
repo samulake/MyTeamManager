@@ -2,6 +2,7 @@ package org.samulake.web.persistence.dao;
 
 import org.samulake.web.core.converter.AbstractConverter;
 import org.samulake.web.core.converter.TeamConverter;
+import org.samulake.web.core.dto.EventDto;
 import org.samulake.web.core.dto.MatchDto;
 import org.samulake.web.core.dto.TeamDto;
 import org.samulake.web.core.entity.EventEntity;
@@ -32,5 +33,12 @@ public class MatchDao extends AbstractDao<MatchEntity, MatchDto, Long> {
         }
         nextMatches.sort(Comparator.comparing(EventEntity::getDateTime));
         return converter.toDtoCollection(nextMatches).get(0);
+    }
+
+    @Override
+    public List<MatchDto> findAll() {
+        List<MatchDto> all = super.findAll();
+        all.sort(Comparator.comparing(EventDto::getDateTime));
+        return all;
     }
 }

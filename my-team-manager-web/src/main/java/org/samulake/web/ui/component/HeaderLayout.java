@@ -8,7 +8,7 @@ public class HeaderLayout extends HorizontalLayout {
 
     public HeaderLayout() {
         Label title = new Label("MyTeamManager");
-        title.addStyleName("H1");
+        title.setStyleName("header");
         addComponent(title);
     }
 }

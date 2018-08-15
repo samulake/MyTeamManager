@@ -23,6 +23,7 @@ import org.samulake.web.ui.view.ITeamFormView;
 import org.samulake.web.ui.view.ITeamManagementView;
 import org.samulake.web.ui.view.ITreningView;
 import org.samulake.web.ui.view.impl.LoginView;
+import org.samulake.web.ui.view.impl.SettingsView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -49,6 +50,12 @@ public class MyTeamManagerUI extends UI {
 	@Autowired
 	private SpringViewProvider viewProvider;
 
+    private void initNavigator() {
+        Navigator navigator = new Navigator(this, contentLayout);
+        navigator.addProvider(viewProvider);
+        setNavigator(navigator);
+    }
+
     public Map<String, String> menuUrlMap;
 
     @Autowired
@@ -61,6 +68,7 @@ public class MyTeamManagerUI extends UI {
         menuUrlMap.put(MenuLayout.MY_TEAM_MENU_OPTION, ITeamManagementView.VIEW_URL);
         menuUrlMap.put(MenuLayout.LOG_OUT_MENU_OPTION, LoginView.VIEW_URL);
         menuUrlMap.put(MenuLayout.CREATE_TEAM_MENU_OPTION, ITeamFormView.VIEW_URL);
+        menuUrlMap.put(MenuLayout.SETTINGS_MENU_OPTION, SettingsView.VIEW_URL);
     }
 	
 	@Override
@@ -95,12 +103,6 @@ public class MyTeamManagerUI extends UI {
         setContent(layout);
     }
 
-    private void initNavigator() {
-        Navigator navigator = new Navigator(this, contentLayout);
-        navigator.addProvider(viewProvider);
-        setNavigator(navigator);
-    }
-
     private AbstractLayout buildMenuLayout() {
         Optional userTeam = Optional.ofNullable(userService.getLoggedUserDetails().getTeam());
         MenuLayout.MenuLayoutBuilder menuLayoutBuilder = new MenuLayout.MenuLayoutBuilder();
@@ -108,7 +110,8 @@ public class MyTeamManagerUI extends UI {
             menuLayoutBuilder
                 .withTeamManagementView()
                 .withMatchView()
-                .withTreningView();
+                .withTreningView()
+                .withSettingsMenuOption();
         } else menuLayoutBuilder.withTeamFormView();
         return menuLayoutBuilder.withLogoutMenuOption().build();
     }

@@ -6,7 +6,7 @@ import com.vaadin.spring.annotation.UIScope;
 import org.samulake.web.core.dto.MatchDto;
 import org.samulake.web.service.IEventService;
 import org.samulake.web.service.ITeamService;
-import org.samulake.web.service.impl.EventModelService;
+import org.samulake.web.service.impl.DataSourceFacade;
 import org.samulake.web.ui.component.MatchDetailsPanel;
 import org.samulake.web.ui.controller.MatchController;
 import org.samulake.web.ui.view.FormWindowHandler;
@@ -32,11 +32,13 @@ public class MatchView extends EventView<MatchController, IEventService<MatchDto
     private ITeamService teamService;
 
     @Autowired
-    private EventModelService dataSource;
+    private DataSourceFacade dataSource;
 
     @Autowired
     public MatchView(MatchController controller, @Qualifier("matchService") IEventService<MatchDto> model) {
         super(controller, model, LayoutFactory.getMatchesManagementLayout());
+        addDeletePanel.getAddButton().setCaption("Add Match");
+        addDeletePanel.getAddButton().setWidth("150px");
     }
 
     @Override

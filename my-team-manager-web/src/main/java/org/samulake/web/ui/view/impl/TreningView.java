@@ -6,7 +6,7 @@ import com.vaadin.spring.annotation.UIScope;
 import org.samulake.web.core.dto.TreningDto;
 import org.samulake.web.service.IEventService;
 import org.samulake.web.service.ITeamService;
-import org.samulake.web.service.impl.EventModelService;
+import org.samulake.web.service.impl.DataSourceFacade;
 import org.samulake.web.ui.component.TreningDetailsPanel;
 import org.samulake.web.ui.controller.TreningController;
 import org.samulake.web.ui.view.FormWindowHandler;
@@ -19,9 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import static org.samulake.web.ui.view.layout.LayoutFactory.getMatchesManagementLayout;
 import static org.samulake.web.ui.view.layout.LayoutFactory.getTreningManagementLayout;
-import static org.samulake.web.ui.window.form.WindowUtils.*;
+import static org.samulake.web.ui.window.form.WindowUtils.addWindow;
 
 @UIScope
 @SpringView(name= ITreningView.TRENING_VIEW_URL)
@@ -33,11 +32,13 @@ public class TreningView extends EventView<TreningController, IEventService<Tren
     private ITeamService teamService;
 
     @Autowired
-    private EventModelService dataSource;
+    private DataSourceFacade dataSource;
 
     @Autowired
     public TreningView(TreningController controller, @Qualifier("treningService") IEventService<TreningDto> model) {
         super(controller, model, getTreningManagementLayout());
+        addDeletePanel.getAddButton().setCaption("Add Trening");
+        addDeletePanel.getAddButton().setWidth("150px");
     }
 
     @Override

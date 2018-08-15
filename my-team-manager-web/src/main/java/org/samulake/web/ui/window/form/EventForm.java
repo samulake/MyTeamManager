@@ -3,13 +3,9 @@ package org.samulake.web.ui.window.form;
 import com.vaadin.data.HasValue;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateTimeField;
-import com.vaadin.ui.TextField;
-import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteTextField;
 import org.samulake.web.core.dto.EventDto;
 import org.samulake.web.core.dto.PlaceDto;
-import org.samulake.web.service.IEventService;
-import org.samulake.web.service.IPlaceService;
-import org.samulake.web.service.impl.EventModelService;
+import org.samulake.web.service.impl.DataSourceFacade;
 import org.samulake.web.ui.events.SaveEventHandler;
 
 import java.util.HashMap;
@@ -39,7 +35,7 @@ public class EventForm<DTO extends EventDto> extends AbstractFormWindow<DTO>{
         return fieldsMap;
     }
 
-    public void setFormData(EventModelService eventModel) {
+    public void setFormData(DataSourceFacade eventModel) {
         placeDtoComboBox.setItems(eventModel.getEventPlaces());
     }
 }

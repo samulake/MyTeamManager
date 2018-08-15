@@ -15,11 +15,16 @@
     .v-button {
         background: #bbbb77;
         width: 100px;
-      }
+    }
 
     .v-panel {
         color: white;
-        background: rgba(30, 30, 30, 0.65);
+        background: rgba(30, 30, 30, 0.75);
+    }
+
+    .v-grid .v-grid-header th.v-grid-cell {
+        color: black;
+        background: rgba(100,100,100, 0.60);
     }
 
     .menu {
@@ -27,6 +32,21 @@
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
+    }
+
+    .delete {
+        font-weight: bold;
+        color: red;
+    }
+
+    .v-label-header {
+        font-size: 32px;
+    }
+
+    .v-label-match {
+        font-size: 24px;
+        line-height: normal;
+        text-align: center;
     }
 }
 

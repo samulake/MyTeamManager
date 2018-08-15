@@ -4,6 +4,7 @@ import com.vaadin.data.Binder;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import org.samulake.web.core.dto.TeamDto;
 import org.samulake.web.service.ITeamService;
@@ -20,6 +21,8 @@ import static org.samulake.web.ui.view.layout.LayoutFactory.getTeamFormLayout;
 @UIScope
 @SpringView(name = ITeamFormView.VIEW_URL)
 public class TeamFormView extends AbstractView<TeamFormController, ITeamService>  implements ITeamFormView<TeamFormController, ITeamService> {
+    @ViewComponent(name="formPanel")
+    private Panel formPanel;
     @ViewComponent(name = "teamNameTextField")
     private TextField teamNameTextField;
     @ViewComponent(name = "createButton")
@@ -44,6 +47,7 @@ public class TeamFormView extends AbstractView<TeamFormController, ITeamService>
 
     @Override
     public void initViewComponents() {
+        formPanel = new Panel();
         teamNameTextField = new TextField("Name");
         createButton = new Button("Create");
         createButton.addClickListener(event -> getController().onSaveClicked());
